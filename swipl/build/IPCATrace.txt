@@ -1,0 +1,105 @@
+mon mp
+#default NSA Traces
+ts e 1 F1AP_ENCODE *
+ts e 1 F1AP_DECODE *
+ts e 1 E1AP_ENCODE *
+ts e 1 E1AP_DECODE *
+ts e 1 RRC_ENCODE *
+ts e 1 RRC_DECODE *
+ts e 1 NGAP_ENCODE *
+ts e 1 NGAP_DECODE *
+ts e 1 X2AP_ENCODE *
+ts e 1 X2AP_DECODE *
+ts e 1 XNAP_ENCODE *
+ts e 1 XNAP_DECODE *
+ts e 1 NRPPA_ENCODE *
+ts e 1 NRPPA_DECODE *
+ts e 1 S1AP_ENCODE *
+ts e 1 S1AP_DECODE *
+
+#DMRS and PxSCH Multiplexing Traces
+#te e * com_ericsson_l2pdcp
+#te e * com_ericsson_nrbb_fr1_sched
+#te e * com_ericsson_rlc
+#te e * com_ericsson_rlcam_rx
+#te e * com_ericsson_rlcam_tx
+
+#ts e 1 * com_ericsson_l2pdcp
+#ts e 1 * com_ericsson_nrbb_fr1_sched
+#ts e 1 * com_ericsson_rlc
+#ts e 1 * com_ericsson_rlcam_rx
+#ts e 1 * com_ericsson_rlcam_tx
+
+
+#DSCP and QCI Mapping Traces
+ts e 1 * com_ericsson_ppf_pprm
+ts e 1 * com_ericsson_pp_nr_uemi_transport
+ts e 1 * com_ericsson_pp_nr_upper_pp_uemi
+ts e 1 * com_ericsson_rpc_uemi
+ts e 1 * com_ericsson_pp_e1ap
+ts e 1 * com_ericsson_ppbearerctrl
+ts e 1 * com_ericsson_pprm_mom
+ts e 1 * com_ericsson_cat_mofwk
+ts e 1 * com_ericsson_pp_tsi_gtpu
+ts e 1 * com_ericsson_pp_tsi_gmci
+
+
+Syntax if streaming - see note below
+## Most important traces
+ts e 1 * com_ericsson_rp_ue
+ts e 1 * com_ericsson_rp_ue_nr
+ts e 1 * com_ericsson_rc_ue_nr
+ts e 1 * com_ericsson_rc_tc
+ts e 1 * com_ericsson_rc_tc_ue
+
+## Second most important
+ts e 1 * CAPABILITY_DEBUG com_ericsson_rp_ue
+ts e 1 DEBUG com_ericsson_ucl
+ts e 1 * com_ericsson_rc_ue_access
+ts e 1 * com_ericsson_pp_e1ap
+ts e 1 * com_ericsson_pp_bearer_res_coord
+ts e 1 * com_ericsson_pp_bearerctrl_res_mgmt
+
+## If interfaces traces needed
+ts e 1 * com_ericsson_rp_nwif_f1
+ts e 1 * com_ericsson_rc_nwif_f1
+ts e 1 * com_ericsson_rc_nwif_e1
+ts e 1 * com_ericsson_rc_nwif_xn
+ts e 1 * com_ericsson_rc_nwif_x2
+ts e 1 * com_ericsson_rc_nwif_ng
+
+
+## If TN, backhaul traces needed
+ts e 1 * com_ericsson_pp_tsi_gtpu
+ts e 1 * com_ericsson_tn_sctpsi
+ts e 1 * com_ericsson_tn_tnrh
+ts e 1 * com_ericsson_tn_gtp
+ts e 1 * TNRH_IP
+ts e 1 * TNRH_GTPU
+
+## Issues with TN (X2/Xn/S1/N2) IP address
+ts e 1 * com_ericsson_pprm_ipsci
+ts e 1 * com_ericsson_pp_bearerctrl_res_mgmt
+ts e 1 * com_ericsson_tn_oam
+
+#paging traces
+#SIB1
+ts e 1 * com_ericsson_rp_cell_nr
+
+# CU part
+ts e 1 * com_ericsson_rc_nwif
+ts e 1 * com_ericsson_rc_paging
+ts e 1 * com_ericsson_rc_obs
+
+# DU part
+ts e 1 * com_ericsson_rp_nwif
+ts e 1 * com_ericsson_rp_paging
+
+# more from Bijit
+ts e 1 SCH_458_ue_setup com_ericsson_nrbb_fr1_sched
+ts e 1 SCH_464_ue_modify com_ericsson_nrbb_fr1_sched
+ts e 1 SCH_466_ue_modify_completed com_ericsson_nrbb_fr1_sched
+
+mon status
+mon ?
+ts status

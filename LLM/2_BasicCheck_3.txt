@@ -1,0 +1,56 @@
+// Shown in 3rd windows
+// General prompt requirement
+First, we describe the query requirements for all following queries: The rule should be written in SWI-Prolog format. Please keep the rules simple. Provide each command with all required parameters (not just the command itself). Output only the SWI-Prolog code - no explanations or comments. At the end, please include the directive to execute all the rules so that the generated code can be directly run in a Prolog tool. We already have external builtin predicates, please use only the available MOs, Attributes, and instruction (or predicate) lists — do not introduce others or declare them as dynamic. Make sure to follow the defined instruction inputs and respect the comments provided for each MO, Attribute, and instruction. Do not include any markdown code fences or formatting (such as prolog or ). The code should appear as plain text only. This information is for reference only and will be used later in the final query step so no action now. 
+
+
+// Check DU
+In the previous prompt, we selected the MB cell for the IPCA test. The assigned MB cell name is 'DL10DUCell1'. First find the cell's IP address, and show all NR DU cells, then by finding the cell ID, we want to identify the DU function associated with this cell. Generate one concise and executable rule, and directive to execute the rule. Call the directive at end mb_find_duf.
+
+In the previous prompt, we selected the LB cell for the IPCA test. The assigned LB cell name is 'MSRBS1170LBDUCell1'. First find the cell's IP address, and show all NR DU cells, then by finding the cell ID, we want to identify the DU function associated with this cell. Generate one concise and executable rule, and directive to execute the rule. Call the directive at end lb_find_duf.
+
+
+// CRGNB -- Check Rilink --- pick to present 
+In the previous prompt, we already selected the MB cell for the IPCA test. The assigned MB cell name is 'DL10DUCell1'. Step 1, find the cell’s IP address, and then verify its associated RRU by following this sequence: find the cell ID from the MB cell name, then identify the sector carrier belonging to this cell, followed by the sector equipment function corresponding to that sector carrier, and finally find the RRU linked to this sector equipment function. Generate one concise and executable rule for this step but no execution.
+
+Step 2, Retrieve all RiLinks and identify the one that uses the RRU ID (call it rilink RRU) same as the RRU ID obtained from step 1 (call it cell RRU). If the RiLink is disabled ('0'), retrieve the RiPort for the rilink RRU and check whether the RiPort is enabled. If it is enabled ('1'), output the corresponding RiLink; otherwise, block and deblock it using both the rilink RRU ID and RiPort ID. Generate concise and executable rules for both steps 1 and 2, along with a directive to execute these rules at end. Call the directive at end mb_check_rru_rilink.
+
+Step 3, Continue from step 1, retrieve all RiLinks and identify the one that uses the RRU ID (call it rilink RRU) same as the RRU ID obtained from step 1 (call it cell RRU). If the RiLink is disabled ('0'), retrieve the RiPort for the Baseband (BB) or vDU from the RiLink MO and check whether the RiPort is enabled. Steps: Since there is only one Baseband (BB) per MSRBS or one vDU per MB vDU, obtain the FRU ID from the RiLink. Then, get the RiPort ID using the RiLink ID. If the RiPort is found to be disabled('0'), block and deblock it using both the RFU ID and RiPort ID, and then verify the RiPort state again. Generate concise and executable rules for step 1 and 3, along with a directive to execute these rules. Call the directive at end mb_check_vdu_rilink.
+
+// MSRBS — RF branch reference missing. Antenna ontology not yet included.
+In the previous prompt, we already selected the LB cell for the IPCA test. The assigned LB cell name is 'MSRBS1170LBDUCell1'. Step 1, find the cell’s IP address, and then verify its associated RRU by following this sequence: find the cell ID from the LB cell name, then identify the sector carrier belonging to this cell, followed by the sector equipment function corresponding to that sector carrier, and finally find the RRU linked to this sector equipment function. Generate one concise and executable rule for this step but no execution.
+
+Step 2, Retrieve all RiLinks and identify the one that uses the RRU ID (call it rilink RRU) same as the RRU ID obtained from step 1 (call it cell RRU). If the RiLink is disabled ('0'), retrieve the RiPort for the rilink RRU and check whether the RiPort is enabled. If it is enabled ('1'), output the corresponding RiLink; otherwise, block and deblock it using both the rilink RRU ID and RiPort ID. Generate concise and executable rules for both steps 1 and 2, along with a directive to execute these rules at end. Call the directive at end lb_check_rru_rilink.
+
+Step 3, Continue from step 1, retrieve all RiLinks and identify the one that uses the RRU ID (call it rilink RRU) same as the RRU ID obtained from step 1 (call it cell RRU). If the RiLink is disabled ('0'), retrieve the RiPort for the Baseband (BB) or vDU from the RiLink MO and check whether the RiPort is enabled. Steps: Since there is only one Baseband (BB) per MSRBS or one vDU per MB vDU, obtain the FRU ID from the RiLink. Then, get the RiPort ID using the RiLink ID. If the RiPort is found to be disabled ('0'), block and deblock it using both the RFU ID and RiPort ID, and then verify the RiPort state again. Generate concise and executable rules for step 1 and 3, along with a directive to execute these rules. Call the directive at end lb_check_vdu_rilink.
+
+
+// Restart FRU  ---  Skip, take too long
+First find the ip of for the selected MB cell 'DL10DUCell1', then restart the RRU for the selected MB cell 'DL10DUCell1' (find the cell ID from the MB cell name, then identify the sector carrier belonging to this cell, followed by the sector equipment function corresponding to that sector carrier, and finally find the RRU linked to this sector equipment function), wait for 300 seconds, and then check the RRU state. Call the directive at end mb_restart_rru.
+
+After the previous step, restart the RRU for the selected LB cell 'MSRBS1170LBDUCell1', wait for 300 seconds, and then check the RRU state. Call the directive at end lb_restart_rru.
+
+Restart the FRU (VDU) for the CRGNB corresponding to the selected MB cell using the following steps: find the cell’s IP address, retrieve all its field-replaceable units, and identify the one with an ID containing 'VDU'. Then, restart this field-replaceable unit, wait for 300 seconds and verify its operational state. Call the directive at end mb_restart_vdu.
+
+Restart the FRU (BB) for the MSRBS corresponding to the selected LB cell using the following steps: find the cell’s IP address, retrieve all its field-replaceable units, and identify the one with an ID containing 'BB'. Then, restart this field-replaceable unit, wait for 300 seconds and verify its operational state. Call the directive at end lb_restart_bb.
+
+
+// bl/deb term point, cell, sector
+For the selected MB cell 'DL10DUCell1', first find the cell's IP address. Then block all termpoint toward AMFs, then deblock them, wait for 10 seconds, and finally show the status of all termpoint. Then block all cells and all sectors, then deblock all sectors, wait for 10 seconds, and then deblock the selected MB cell named 'DL10DUCell1'. After that, Check the state of the selected MB cell. Generate one concise and executable rule for this step. At the end, please include the directive to execute all the rules so that the generated code can be directly run in a Prolog tool. Call the directive at end mb_bl_deb. For the selected LB cell 'MSRBS1170LBDUCell1', first find the cell's IP address. Then block all termpoint toward AMFs, then deblock them, wait for 10 seconds, and finally show the status of all termpoint. Then block all cells and all sectors, then deblock all sectors, wait for 10 seconds, and then deblock the selected LB cell named 'MSRBS1170LBDUCell1'. After that, Check the state of the selected LB cell. Generate one concise and executable rule for this step. At the end, please include the directive to execute all the rules so that the generated code can be directly run in a Prolog tool. Call the directive at end lb_bl_deb. 
+
+
+// General check  ---  Skip most
+// MB
+In the previous prompt, we already selected the MB cell for the IPCA test. The assigned MB cell name is 'DL10DUCell1'. First, find the cell’s IP address, and then verify its associated RRU by following this sequence: find the cell ID from the MB cell name, then identify the sector carrier belonging to this cell, followed by the sector equipment function corresponding to that sector carrier, and finally find the RRU linked to this sector equipment function, retrieve all RiLinks and identify the one that uses the RRU ID (call it rilink RRU) same as the RRU ID obtained from above step (call it cell RRU). Then show the alarm. Then verify whether the MB cell is enabled. Then verify whether the sector carrier of the selected MB cell is enabled. Then check the status of the RRU of the selected cell. Then check the rilink of the selected cell. Then check the frequency of the MB cell. Then check the channel bandwidth of the MB sector carrier. Check the frequency of all MB sector carriers. Check the channel bandwidth of all MB sector carriers. Generate one concise and executable rule for this step. Call the directive at end mb_check.
+
+The assigned MB cell name is 'DL10DUCell1'. First, find the cell’s IP address. Then check the MB sector equipment function with ID '110'. 
+
+Check the channel bandwidth of the MB sector carrier with ID '26'. 
+
+Show me all rru, please use the cell IP found for cell 'DL10DUCell1'. Generate one concise and executable rule, and directive to execute the rule. Call the directive at end show_me_rru. 
+
+show me FRU with id 'VDU-1'.
+
+
+// LB
+In the previous prompt, we already selected the MB cell for the IPCA test. The assigned MB cell name is 'MSRBS1170LBDUCell1'. First, find the cell’s IP address, and then verify its associated RRU by following this sequence: find the cell ID from the MB cell name, then identify the sector carrier belonging to this cell, followed by the sector equipment function corresponding to that sector carrier, and finally find the RRU linked to this sector equipment function, retrieve all RiLinks and identify the one that uses the RRU ID (call it rilink RRU) same as the RRU ID obtained from above step (call it cell RRU). Then show the alarm. Then verify whether the MB cell is enabled. Then verify whether the sector carrier of the selected MB cell is enabled. Then check the status of the RRU of the selected cell. Then check the rilink of the selected cell. Then check the frequency of the MB cell. Then check the channel bandwidth of the MB sector carrier. Check the frequency of all MB sector carriers. Check the channel bandwidth of all MB sector carriers. Generate one concise and executable rule for this step. The assigned MB cell name is 'MSRBS1170LBDUCell1'. First, find the cell’s IP address. Check the LB sector equipment function with ID '1'. Check the channel bandwidth of the LB sector carrier with ID '1'. Call the directive at end lb_check.
+

@@ -1,0 +1,652 @@
+
+Following are MO list and instruction list we selected to construct our rule, please respect the comment of each MO or instruction when use it:
+
+// MOs list:
+GNBDUFunction 			// This MO represents gNodeB-DU function.
+NRCellDU 			// This MO is NR Cell representation in gNodeB-DU
+NRSectorCarrier 		// This MO represents sector carrier, power and frequency use of SectorEquipmentFunction that covers an area.
+TermPointToAmf 			// This MO models a connection to a Amf.
+TermPointToGNBCUCP 		// This MO models a connection to a gNodeB-CU-CP.
+ExtGNBDUPartnerFunction 	// This MO defines the relationship/configuration for an external DU that your DU needs to cooperate with.
+InterMeLink			// inter-RAN coordination that connects two RAN compute instances so that can be coordinated for carrier aggregation
+GNBCUCPFunction			// This MO Represents the logical node gNodeB-CU-CP. 
+NRCellCU 			// This MO represents a logical NR (New Radio) cell as seen and managed by the CU (Central Unit).
+NRFrequency 			// This MO represents NR Frequency and related measurement parameters.
+NRFreqRelation 			// defines the relationship between one NR cell and a specific NR frequency layer.
+ExternalGNBCUCPFunction 	// represents an external Central Unit – Control Plane (CU-CP) function that your node needs to communicate with.
+ExternalNRCellCU 		// represents a neighboring NR cell as seen from the CU’s perspective, where that cell is not hosted by the current CU.
+NRCellRelation 			// defines the cell-to-cell relationship between a source NR cell and a target NR cell
+TermPointToGNodeB		// represents a logical termination point in your node’s configuration which connects it to another gNodeB
+RiLink				// models the logical connection between two radio nodes
+RiPort 				// represents a specific radio interface port or endpoint associated with a node’s radio interface
+TnPort 				// Transport Network Port — it represents a logical or physical port on the transport network side
+EthernetPort 			// represents a physical or logical Ethernet interface port on a network element in vRAN
+VlanPort 			// represents a logical VLAN (Virtual Local Area Network) interface or sub-interface on a network element
+SectorEquipmentFunction 	// represents the configuration and management of the radio sector equipment within a 5G base station or vRAN node.
+FieldReplaceableUnit		// represent to instance of Field Replaceable Unit MO representing a remote radio unit or vDU (virtual Distributed Unit)
+
+
+// Attributes list in format of MO : attribute name
+GNBDUFunction : caVlanPortRef 		// Reference to an instance of VLan Port MO used by the du function
+GNBDUFunction : gNBId 			// gNodeB ID of the GNB DU Function
+GNBDUFunction : gNBDUId 		// gNodeB DU ID of the GNB DU Function
+NRCellDU : bandList			// List of all NR bands the cells belongs to.
+NRCellDU : nRPCI			// The Physical Cell Identity (PCI) of the NR cell.
+NRCellDU : pLMNIdList			// List of PLMN identifier.
+NRCellDU : pMax				// Maximum UE uplink transmission power in serving cell.
+NRCellDU : sNSSAIList			// List of Single Network Slice Selection Assistance Information (S-NSSAI).
+NRCellDU : csiRsConfig4P		// Settings related to 4-port CSI and associated port to antenna mapping.
+NRCellDU : csiRsConfig32P		// Settings related to 32-port CSI and associated port to antenna mapping.
+NRCellDU : ssbFrequency			// The Synchronization Signal Block (SSB) frequency configurate to du cell
+NRCellDU : nRSectorCarrierRef		// Reference to an instance of sector carrier MO used by the du cell
+NRCellDU : administrativeState		// To show if the NR DU cell is enabled or not
+NRCellDU : cellLocalId			// local cell ID of the NR cell DU
+NRSectorCarrier : arfcnDL		// NR Absolute Radio Frequency Channel Number (NR-ARFCN) for downlink.
+NRSectorCarrier : arfcnUL		// NR Absolute Radio Frequency Channel Number (NR-ARFCN) for uplink.
+NRSectorCarrier : bSChannelBwDL		// The bandwidth of the channel of the sector carrier
+NRSectorCarrier : configuredMaxTxPower 	// The max transmit power of the sector carrier
+NRSectorCarrier : sectorEquipmentFunctionRef 	// Reference to an instance of sector equipment function
+NRSectorCarrier : administrativeState	// To show if the NR Sector Carrier is enabled or not
+SectorEquipmentFunction : administrativeState	// To show if the NR Sector Equipment Function is enabled or not
+SectorEquipmentFunction : rfBranchRef	// Reference to an instance of Field Replaceable Unit, such as RRU or vDU Hardware
+FieldReplaceableUnit : administrativeState	// To show if the RRU or vDU HW is enabled or not
+RiLink : riPortRef1			// Reference to an instance of riport for Field Replaceable Unit, such as BB (Baseband) or vDU from Rilink MO
+RiLink : riPortRef2			// Reference to an instance of riport for Field Replaceable Unit, such as RRU (Remote Radio Unit) from Rilink MO
+RiLink : operationalState		// To show if the RiLink is enabled or not
+RiPort : administrativeState		// To show if the Riport is enabled or not
+TermPointToAmf : pLMNIdList		// List of PLMN identifier.
+TermPointToAmf : sNSSAIList		// List of Single Network Slice Selection Assistance Information (S-NSSAI).
+TermPointToAmf : administrativeState	// To show if the Termination Point toward Amf function is enabled or not
+
+
+TnPort : reservedBy			// Contains a list of EthernetPort MO instances that reserve this TNPort MO instance 
+EthernetPort : encapsulation		// Reference to underlying encapsulation, which can be of MO type TNPort
+EthernetPort : reservedBy		// Contains a list of VlanPort MO instances that reserve this EthernetPort MO instance.
+VlanPort : encapsulation		// Reference to underlying encapsulation, which can be of MO type EthernetPort
+VlanPort : vlanId			// the vlan id of a vlan port MO
+VlanPort : reservedBy			// Contains a list of GNBDUFunction MO or ExtGNBDUPartnerFunction MO that reserve this VlanPort MO instance.
+
+
+TermPointToGNBCUCP : administrativeState	// To show if the Termination Point toward gNodeB CUCP function is enabled or not
+GNBCUCPFunction : gNBId			// gNodeB ID of the gNodeB CUCP function
+GNBCUCPFunction : pLMNId		// PLMN ID of the gNodeB CUCP function
+NRCellCU : cellLocalId			// local cell ID of the NR cell CU
+NRCellCU : cellState			// To show if the NR cell CU is enabled or not
+NRCellCU : nRFrequencyRef		// Reference to an instance of NR frequency MO used by the NR cell CU
+NRCellCU : pLMNIdList			// List of PLMN identifier.
+NRCellCU : nRTAC			// NR Tracking Area Code (TAC).
+NRCellCU : sNSSAIList			// List of Single Network Slice Selection Assistance Information (S-NSSAI).
+
+
+ExternalGNBCUCPFunction : gNBId		// gNodeB ID of the external gNodeB CUCP function
+ExternalGNBCUCPFunction : pLMNId	// PLMN ID of the external gNodeB CUCP function
+TermPointToGNodeB : administrativeState	// To show if the Termination Point toward gNodeB is enabled or not
+TermPointToGNodeB : ipv6Address		// The ip v6 address of the Termination Point toward gNodeB
+NRFreqRelation : nRFrequencyRef		// Reference to downlink NR carrier frequency associated with the SSB frequency
+NRFreqRelation : reservedBy		// To specify the NR Cell Relation MO who used this NR Frequency Relation MO 
+ExternalNRCellCU : cellLocalId		// cell local ID of the external NR cell CU
+ExternalNRCellCU : nRFrequencyRef	// Reference to an instance of NR frequency MO used by the external NR cell CU
+ExternalNRCellCU : reservedBy		// Reference to an instance of NR frequency MO who use this external NR cell CU
+ExternalNRCellCU : pLMNIdList		// List of PLMN identifier.
+ExternalNRCellCU : nRTAC		// NR Tracking Area Code (TAC).
+ExternalNRCellCU : nRPCI		// The Physical Cell Identity (PCI) of the External NR cell.
+ExternalNRCellCU : sNSSAIList		// List of Single Network Slice Selection Assistance Information (S-NSSAI).
+NRCellRelation : nRCellRef		// To specify the neighbor NR cell CU
+NRCellRelation : nRFreqRelationRef	// Reference to an instance of NR frequency MO who used this NRCellRelation 
+NRCellRelation : coverageIndicator	// coverage area of cell
+NRCellRelation : sCellCandidate		// Whether can be Second Cell candidate for carrier aggregation
+NRCellRelation : caStatusActive		// Active status of carrier aggregation for this cell relation instance
+ExtGNBDUPartnerFunction : caVlanPortRef	// Reference to an instance of VLan Port MO used by the external du partner function
+ExtGNBDUPartnerFunction : gNBDUId	// gNodeB DU ID of the external du partner function
+ExtGNBDUPartnerFunction : gNBId		// gNodeB ID of the external du partner function
+InterMeLink : operationalState		// To show if the Inter-ME link is enabled or not
+InterMeLink : vlanId			// VLan port ID of the Inter-ME link
+
+IPCACounter: pmMacPduVolDlUeSCell 	// Downlink PDU volume on the secondary cell, used to confirm CA activation.
+
+// Instruction List: The comments are provided below the instructions.		
+// General instructions
+prMO(motype, nodeIP)			
+// print all MOs of specific type, its input is the type of MO to print, nodeIP appear in almost every instruction is the ip of the node we show MO
+getMO(motype, moname, nodeIP)		
+// print content of MO of specific type and name, its input tell the type of MO and name of MO to print
+
+// license
+enableIPCALicense(nodeIP)		
+// Enable the specific license
+disableIPCALicense(nodeIP)		
+// Disable the specific license
+showIPCALicense(nodeIP)		
+// Show the specific license
+showAlarm(nodeIP)
+// Show the alarm
+showIPCAColi(nodeIP)
+// Show the output of Coli command
+showIPCADUCounter(ducellID, nodeIP)
+// show the IPCA counters
+showIPCACUCounter(cucellID, nodeIP)
+// show the IPCA counters
+enableIPCATrace(nodeIP)		
+// Enable the specific IPCA Trace
+disableIPCATrace(nodeIP)		
+// Disable the specific IPCA Trace
+collectDCGM(nodeIP)		
+// Collect dcgm from node with specified IP
+
+
+// Backward tracking is not supported yet, but it is essential for a complete instruction set and effective debugging. It can be added later.
+// Attributes are essential for tracking support. Adding comments helps identify which MO and attribute should be used for retrieval.
+// No additional instructions are needed for tracking each MO.
+
+
+// --- GNBDUFunction instructions ---
+showMOGNBDUFunctionByID(ID, nodeIP)		
+// show the GNB DU Function MO with specified ID: all "show" function prints the MO only (no attribute/MO extraction).
+// nodeIP appear in almost every instruction is the ip of the node we show MO			
+showAttributeMOGNBDUFunctionByID(ID, attributeName, nodeIP)
+// show the specified attribute of the GNB DU Function MO with specified ID			
+configAttributeMOGNBDUFunctionByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the GNB DU Function MO with specified cell ID, using the specified attribute value
+getAttributeMOGNBDUFunctionByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of the GNB DU Function MO with specified ID, A is the returned attribute ID or value
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getNodeIPMOGNBDUFunctionByID(DUFID, A)
+// Get the node pre-defined IPv6 of the GNB DU Function MO with specified ID, A is the returned pre-defined IPv6 of Node
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getCAVlanPortIDMOGNBDUFunctionByID(DUFID, A)
+// Get the pre-defined CA Vlan ID of the GNB DU Function MO with specified ID, A is the returned pre-defined CA Vlan port of Node
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getOAMVlanPortIDMOGNBDUFunctionByID(DUFID, A)
+// Get the pre-defined OAM Vlan ID of the GNB DU Function MO with specified ID, A is the returned pre-defined OAM Vlan port of Node
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getBackHaulIPMOGNBDUFunctionByID(DUFID, A)
+// Get the pre-defined BackHaul IPv6 of the GNB DU Function MO with specified ID, A is the returned pre-defined IPv6 of BackHaul
+// Each "get" function extracts attributes or MOs, enabling further processing.
+
+
+// --- NRCellDU instructions ---
+showAllNRCellDU(nodeIP)			
+// show all NR Cell DU MOs: all "show" function prints the MO only (no attribute/MO extraction), cellIP is the inputted cell IP address.
+showMONRCellDUByID(ID, nodeIP)			
+// show the NR Cell DU MO using cell ID as input, ID is formally used in system to represent the MO
+blockMONRCellDUByID(ID, nodeIP)
+// block the NR Cell DU with specified cell ID
+blockAllNRCellDU(nodeIP)
+// block all NR Cell DU 
+deblockMONRCellDUByID(ID, nodeIP)
+// deblock the NR Cell DU with specified cell ID
+deblockAllNRCellDU(nodeIP)
+// deblock all NR Cell DU 
+showAttributeMONRCellDUByID(ID, attributeName, nodeIP)
+// show the specified attribute of the NR Cell DU MO with specified cell ID
+showAttributeAllNRCellDU(attributeName, nodeIP)
+// show the specified attribute of all NR Cell DU MOs 
+configAttributeMONRCellDUByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the NR Cell DU MO with specified cell ID, using the specified attribute value
+getIPForNRCellDUByName(cellName, A)
+// Get the IP address with specified cell name, A is the returned IP address
+getMONRCellDUByName(name, A)		
+// Get the NR Cell DU MO by cell name; 'A' is the returned Cell ID.
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getGNBDUFMOCellDUbyID(cellID, cellIP, A)
+// Get the gNB DU Function by cell ID; cellIP is the inputted cell IP address. 'A' is the returned GNB DU Function ID.
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getGNBIDMOCellDUbyID(ID, A, nodeIP)
+// Get the gNB ID by cell ID; 'A' is the returned GNB ID.
+// Each "get" function extracts attributes or MOs, enabling further processing.
+getAttributeMONRCellDUByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of an NR Cell DU MO (by cell ID, nodeIP); 'A' is the returned attribute.
+// Each "get" function extracts attributes or MOs, enabling further processing.
+
+getAllCellDU(A, nodeIP)
+getAttributeAllMONRCellDU(attributeName, A, nodeIP)	
+
+
+// --- NRSectorCarrier instructions ---
+showAllNRSectorCarrier(nodeIP)	
+// show all NR Sector Carrier MOs : all "show" function prints the MO only (no attribute/MO extraction).			
+showMONRSectorCarrierByID(ID, nodeIP)		
+// show the NR Sector Carrier MO with specified ID: all "show" function prints the MO only (no attribute/MO extraction).			
+blockMONRSectorCarrierByID(ID, nodeIP)
+// block the NR Sector Carrier MOs with specified ID		
+blockAllNRSectorCarrier(nodeIP)
+// block all NR Sector Carrier MOs 			
+deblockMONRSectorCarrierByID(ID, nodeIP)
+// deblock the NR Sector Carrier MOs with specified ID		
+deblockAllNRSectorCarrier(nodeIP)
+// deblock all NR Sector Carrier MOs 			
+showAttributeMONRSectorCarrierByID(ID, attributeName, nodeIP)
+// show the specified attribute of the NR Sector Carrier MO with specified ID			
+showAttributeAllNRSectorCarrier(attributeName, nodeIP)
+// show the specified attribute of all NR Sector Carrier MOs			
+configAttributeMONRSectorCarrierByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the NR Sector Carrier MO with specified ID to a specified attribute value			
+getAttributeMONRSectorCarrierByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of the NR Sector Carrier MO with specified ID, A is the returned attribute ID or value
+// Each "get" function extracts attributes or MOs, enabling further processing.
+
+getAllNRSectorCarrier(A, nodeIP)
+getAttributeAllMONRSectorCarrier(attributeName, A, nodeIP)	
+
+
+// --- SectorEquipmentFunction instructions ---
+showAllSectorEquipmentFunction(nodeIP)				
+// show all Sector Equipment Function MOs 			
+showMOSectorEquipmentFunctionByID(ID, nodeIP)		
+blockMOSectorEquipmentFunctionByID(ID, nodeIP)
+blockAllSectorEquipmentFunction(nodeIP)
+deblockMOSectorEquipmentFunctionByID(ID, nodeIP)
+deblockAllSectorEquipmentFunction(nodeIP)
+showAttributeMOSectorEquipmentFunctionByID(ID, attributeName, nodeIP)
+showAttributeAllSectorEquipmentFunction(attributeName, nodeIP)
+configAttributeMOSectorEquipmentFunctionByID(ID, attributeName, attributeValue, nodeIP)
+getAttributeMOSectorEquipmentFunctionByID(ID, attributeName, A, nodeIP)
+// Get the specified attribute of Sector Equipment Function MO with specified ID, A is the returned attribute ID or value
+// Each "get" function extracts attributes or MOs, enabling further processing.
+
+getAllSectorEquipmentFunction(A, nodeIP)
+getAttributeAllMOSectorEquipmentFunction(attributeName, A, nodeIP)
+
+
+// --- FieldReplaceableUnit instructions ---
+showAllFieldReplaceableUnit(nodeIP)
+// show all Field Replaceable Unit MOs, which control RRU or VDU HW 							
+showMOFieldReplaceableUnitByID(ID, nodeIP)		
+blockMOFieldReplaceableUnitByID(ID, nodeIP)
+blockAllFieldReplaceableUnit(nodeIP)
+restartMOFieldReplaceableUnitByID(ID, nodeIP)
+// Restart the Field Replaceable Unit MOs (RRU or VDU, nodeIP) with specified ID							
+restarAllFieldReplaceableUnit(nodeIP)
+// Restart all Field Replaceable Unit MOs 							
+deblockMOFieldReplaceableUnitByID(ID, nodeIP)
+deblockAllFieldReplaceableUnit(nodeIP)
+showAttributeMOFieldReplaceableUnitByID(ID, attributeName, nodeIP)
+showAttributeAllFieldReplaceableUnit(attributeName, nodeIP)
+configAttributeMOFieldReplaceableUnitByID(ID, attributeName, attributeValue, nodeIP)
+getAttributeMOFieldReplaceableUnitByID(ID, attributeName, A, nodeIP)
+getAllFieldReplaceableUnit(A, nodeIP)
+
+getAttributeAllMOFieldReplaceableUnit(attributeName, A, nodeIP)
+
+
+// --- RiLink instructions --- 
+showAllRiLink(nodeIP)				
+// show all Ri Link MOs 			
+showMORiLinkByID(ID, nodeIP)		
+showAttributeMORiLinkByID(ID, attributeName, nodeIP)
+showAttributeAllRiLink(attributeName, nodeIP)
+configAttributeMORiLinkByID(ID, attributeName, attributeValue, nodeIP)
+getAllRiLink(A, nodeIP)
+// Get all Ri Link MOs and store to A as a list of returned Ri Links, "get" function extracts attributes or MOs to enable further processing. 	
+getAttributeMORiLinkByID(ID, attributeName, A, nodeIP)
+// Get specified attribute of Ri Link MO with specified ID, A save returned attribute; "get" function extracts attribute/MO to enable further processing.
+getAttributeAllRiLink(attributeName, A, nodeIP)
+// Get specified attribute of all Ri Link MOs, store in A as a list of returned attributes; 
+// "get" function extracts attribute/MO to enable further processing. 
+// attributeName use 'riPortRef1' for riport of BB/VDU, 'riPortRef2' for riport of RRU.
+getFRUMORiLinkByID(ID, attributeName, A, nodeIP)
+// Get FRU attribute of Ri Link MO with specified ID, A save returned attribute; 
+// attributeName use 'riPortRef1' for riport of BB/VDU, 'riPortRef2' for riport of RRU.
+getRiportMORiLinkByID(ID, attributeName, A, nodeIP)
+// Get Riport attribute of Ri Link MO with specified ID, A save returned attribute; attributeName use 'riPortRef1' for BB/VDU, 'riPortRef2' for RRU.
+
+
+// --- RiPort instructions ---
+showAllRiPort(nodeIP)				
+// show all Ri Port MOs 			
+showMORiPortByID(FRUID, ID, nodeIP)
+// show the Ri Port MO with the specified FRU ID and Ri Port ID.
+// Ri Port MOs follow the format: FieldReplaceableUnit=VDU-1,RiPort=A, and are identified by both the FRU ID and the Ri Port ID.
+blockMORiPortByID(FRUID, ID, nodeIP)
+// Block the Ri Port MO with the specified FRU ID and Ri Port ID.
+blockAllRiPort(nodeIP)
+// Block all Ri Port MOs 			
+deblockMORiPortByID(FRUID, ID, nodeIP)
+// Deblock the Ri Port MO with the specified FRU ID and Ri Port ID.
+deblockAllRiPort(nodeIP)
+// Deblock all Ri Port MOs 			
+showAttributeMORiPortByID(FRUID, ID, attributeName, nodeIP)
+// show the specified attribute of the Ri Port MO with the specified FRU ID and Ri Port ID.
+showAttributeAllRiPort(FRUID, attributeName, nodeIP)
+// show the specified attribute of all the Ri Port MOs on the specified FRU ID.
+getAttributeMORiPortByID(FRUID, ID, attributeName, A, nodeIP)
+// Get the specified attribute of a Ri Port MO by Ri Port ID with the specified FRU ID. The result is stored in A as the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllRiPort(FRUID, attributeName, A, nodeIP)
+// Get the specified attribute of Ri Port MOs with specified FRU ID. The result is stored in A as the returned list of attributes. (***) 
+// "get" function extracts attribute/MO to enable further processing. 
+
+getAllRiPort(A, nodeIP)
+
+
+// --- TermPointToAmf instructions ---
+showAllTermPointToAmf(nodeIP)	
+// show all TermPoint To Amf MOs : all "show" function prints the MO only (no attribute/MO extraction).			
+showMOTermPointToAmfByID(ID, nodeIP)		
+// show the TermPoint To Amf MO with specified ID: all "show" function prints the MO only (no attribute/MO extraction).			
+blockMOTermPointToAmfByID(ID, nodeIP)
+// block TermPoint To Amf MOs with specified ID		
+blockAllTermPointToAmf(nodeIP)
+// block all TermPoint To Amf MOs 			
+deblockMOTermPointToAmfByID(ID, nodeIP)
+// deblock the TermPoint To Amf MOs with specified ID		
+deblockAllTermPointToAmf(nodeIP)
+// deblock all TermPoint To Amf MOs 			
+showAttributeMOTermPointToAmfByID(ID, attributeName, nodeIP)
+// show the specified attribute of the TermPoint To Amf MO with specified ID			
+showAttributeAllTermPointToAmf(attributeName, nodeIP)
+// show the specified attribute of all TermPoint To Amf MOs			
+configAttributeMOTermPointToAmfByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the TermPoint To Amf MO with specified ID to a specified attribute value			
+getAttributeMOTermPointToAmfByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of the TermPoint To Amf MO with specified ID, A is the returned attribute ID or value
+// Each "get" function extracts attributes or MOs, enabling further processing.
+
+getAllTermPointToAmf(A, nodeIP)
+getAttributeAllMOTermPointToAmf(attributeName, A, nodeIP)
+
+
+// New INST
+// --- TnPort instructions ---
+showAllTnPort(nodeIP)	
+// show all TN Port MOs 						
+showMOTnPortByID(FRUID, ID, nodeIP)		
+// show the TN Port MO with the specified FRU ID and TN Port ID. 
+// TN Port MOs follow the format: FieldReplaceableUnit=VDU-1,TnPort=TN_A, and are identified by both the FRU ID and the TN Port ID.
+createMOTnPortByID(FRUID, ID, nodeIP)
+// Create the TN Port MO with the specified FRU ID and TN Port ID.
+deleteMOTnPortByID(FRUID, ID, nodeIP)
+// Delete the TN Port MO with the specified FRU ID and TN Port ID.
+showAttributeMOTnPortByID(FRUID, ID, attributeName, nodeIP)
+// show the specified attribute of the TN Port MO with the specified FRU ID and TN Port ID.
+showAttributeAllTnPort(FRUID, attributeName, nodeIP)
+// show the specified attribute of all the TN Port MOs on the specified FRU ID.
+configAttributeMOTnPortByID(FRUID, ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the TN Port MO with the specified FRU ID and TN Port ID, with specified attribute value
+getAllTnPort(A, nodeIP)		
+// Get all TN Port MOs. The result is stored in A as the returned list of TN Port ID. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOTnPortByID(FRUID, ID, attributeName, A, nodeIP)	
+// Get the specified attribute of a TN Port MO with the specified FRU ID and TN Port ID. The result is stored in A as the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllTnPort(FRUID, attributeName, A, nodeIP)		
+// Get the specified attribute of TN Port MOs with specified FRU ID. The result is stored in A as the returned list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+getFRUMOTnPort(ID, A, nodeIP)
+// Get the FRU of the TN Port MO with specified ID. The result stored in A is the returned FRU ID. 
+getAllFRUMOTnPort(A, nodeIP)
+// Get the FRU of all TN Port MOs. The result stored in A are the returned list of FRU IDs. 
+
+
+// --- EthernetPort instructions ---
+showAllEthernetPort(nodeIP)					
+// show all Ethernet Port MOs 						
+showMOEthernetPortByID(ID, nodeIP)		
+// show the Ethernet Port MO with the specified Ethernet Port ID. 
+createMOEthernetPortByID(ID, FRUID, TNPID, nodeIP)
+// Create an Ethernet Port MO with the specified Ethernet Port ID. Since it must reference a TN Port, both the FRU ID and TNP ID are required.
+deleteMOEthernetPortByID(ID, nodeIP)
+// Delete the Ethernet Port MO with the specified Ethernet Port ID. 
+blockMOEthernetPortByID(ID, nodeIP)
+// Block the Ethernet Port MO with the specified Ethernet Port ID. 
+deblockMOEthernetPortByID(ID, nodeIP)
+// Deblock the Ethernet Port MO with the specified Ethernet Port ID. 
+showAttributeMOEthernetPortByID(ID, attributeName, nodeIP)
+// show the specified attribute of the Ethernet Port MO with the specified Ethernet Port ID.
+showAttributeAllEthernetPort(attributeName, nodeIP)
+// show the specified attribute of all Ethernet Port MOs.
+configAttributeMOEthernetPortByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the Ethernet Port MO with the specified Ethernet Port ID, using specified attribute value
+getAllEthernetPort(A, nodeIP)		
+// Get all Ethernet Port MOs. The result is stored in A as the returned list of Ethernet Port IDs. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOEthernetPortByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of a Ethernet Port MO with the specified Ethernet Port ID. The result is stored in A as the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllEthernetPort(attributeName, A, nodeIP)		
+// Get the specified attribute of all Ethernet Port MOs. The result is stored in A as the returned list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+
+
+// --- VlanPort instructions ---
+showAllVlanPort(nodeIP)
+// show all Vlan Port MOs 										
+showMOVlanPortByID(ID, nodeIP)		
+// show the Vlan Port MO with the specified Vlan Port ID. 
+createMOVlanPortByID(ID, EPID, vlanID, nodeIP)
+// Create an Vlan Port MO with the specified Vlan Port ID, ethernet port ID and vlan ID. 
+deleteMOVlanPortByID(ID, nodeIP)
+// Delete an Vlan Port MO with the specified Vlan Port ID. 
+showAttributeMOVlanPortByID(ID, attributeName, nodeIP)
+// show the specified attribute of the Vlan Port MO with the specified Vlan Port ID.
+showAttributeAllVlanPort(attributeName, nodeIP)
+// show the specified attribute of all Vlan Port MOs.
+configAttributeMOVlanPortByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the Vlan Port MO with the specified Vlan Port ID, using specified attribute value
+getAllVlanPort(A, nodeIP)				
+// Get all Vlan Port MOs. The result is stored in A as returned list of Vlan port IDs. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOVlanPortByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of a Vlan Port MO with the specified Vlan Port ID. The result is stored in A as the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllVlanPort(attributeName, A, nodeIP)		
+// Get the specified attribute of all Vlan Port MOs. The result is stored in A as the returned list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+
+
+// CA
+// --- ExternalGNBCUCPFunction instructions ---
+showAllExternalGNBCUCPFunction(nodeIP)				
+// show all External GNB CUCP Function MOs 										
+showMOExternalGNBCUCPFunctionByID(ID, nodeIP)		
+// show the External GNB CUCP Function MO with the specified MO ID. 
+createMOExternalGNBCUCPFunctionByID(ID, gNBID, nodeIP)
+// Create the External GNB CUCP Function MO with the specified MO ID, and specified GNB ID.  
+deleteMOExternalGNBCUCPFunctionByID(ID, nodeIP)
+// Delete the External GNB CUCP Function MO with the specified MO ID. 
+showAttributeAllExternalGNBCUCPFunction(attributeName, nodeIP)
+// show the specified attribute of all External GNB CUCP Function MOs.
+showAttributeMOExternalGNBCUCPFunctionByID(ID, attributeName, nodeIP)
+// show the specified attribute of the External GNB CUCP Function MO with the specified MO ID.
+configAttributeMOExternalGNBCUCPFunctionByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the External GNB CUCP Function MO with the specified MO ID, using specified attribute value
+getAllExternalGNBCUCPFunction(A, nodeIP)
+// Get all External GNB CUCP Function MOs. A is returned list of External GNB CUCP Function IDs. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOExternalGNBCUCPFunctionByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of a External GNB CUCP Function MO with the specified MO ID. The result is stored in A as the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllExternalGNBCUCPFunction(attributeName, A, nodeIP)	
+// Get the specified attribute of all External GNB CUCP Function MOs. The result is stored in A as the returned list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+getTermPointToGNodeBMOExternalGNBCUCPFunctionByID(EID, A, nodeIP)
+// Get the TermPoint To GNodeB MO of the External GNB CUCP Function MO with specified ID. The result stored in A is the returned TermPointToGNodeB ID. 
+// "get" function extracts attribute/MO to enable further processing. 
+
+
+// --- TermPointToGNodeB instructions ---   change all with TIDs
+showAllTermPointToGNodeB(nodeIP)
+// show all TermPoint To GNodeB MOs 														
+showMOTermPointToGNodeBByID(externalGNBCUCPFuncID, nodeIP)		
+// show the TermPoint To GNodeB MO with the specified ID. 
+// MO TermPointToGNodeB has format like : ExternalGNBCUCPFunction=BS1022,TermPointToGNodeB=1, so we use ExternalGNBCUCPFunction to identify it	
+createMOTermPointToGNodeBByID(externalGNBCUCPFuncID, nodeIP)
+// Create the TermPoint To GNodeB MO with the specified ExternalGNBCUCPFunction ID.  
+deleteMOTermPointToGNodeBByID(externalGNBCUCPFuncID, nodeIP)
+// Delete the TermPoint To GNodeB MO with the specified ExternalGNBCUCPFunction ID.  
+showAttributeAllTermPointToGNodeB(attributeName, nodeIP)
+// show the specified attribute of all TermPoint To GNodeB MOs.
+showAttributeMOTermPointToGNodeBByID(externalGNBCUCPFuncID, TID, attributeName, nodeIP)
+// show the specified attribute of the TermPoint To GNodeB MO with the specified ExternalGNBCUCPFunction ID.
+configAttributeMOTermPointToGNodeBByID(externalGNBCUCPFuncID, TID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the TermPoint To GNodeB MO with the specified ExternalGNBCUCPFunction ID, using specified attribute value
+getAllTermPointToGNodeB(A, nodeIP)
+// Get all TermPoint To GNodeB MOs. A is returned list of ExternalGNBCUCPFunction ID, each with one TermPoint To GNodeB. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOTermPointToGNodeBByID(externalGNBCUCPFuncID, attributeName, A, nodeIP)	
+// Get the specified attribute of a TermPoint To GNodeB MO with the specified ExternalGNBCUCPFunction ID. A is the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllTermPointToGNodeB(attributeName, A, nodeIP)				
+// Get the specified attribute of all TermPoint To GNodeB MOs. The result is stored in A as the returned list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+
+
+// Rel
+// --- NRCellCU instructions ---
+showAllNRCellCU(nodeIP)
+// show all NR Cell CU MOs 														
+showMONRCellCUByID(ID, nodeIP)		
+// show the NR Cell CU MO with the specified ID. 
+showAttributeMONRCellCUByID(ID, attributeName, nodeIP)
+// show the specified attribute of the NR Cell CU MO with the specified ID.
+showAttributeAllNRCellCU(attributeName, nodeIP)
+// show the specified attribute of all NR Cell CU MOs.
+configAttributeMONRCellCUByID(ID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of the NR Cell CU MO with the specified ID, using specified attribute value
+getAllNRCellCU(A, nodeIP);
+// Get all NR Cell CU MOs. A is returned list of NR Cell CU IDs. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMONRCellCUByID(ID, attributeName, A, nodeIP)	
+// Get the specified attribute of a NR Cell CU MO with the specified ID. A is the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllNRCellCU(attributeName, A, nodeIP)		
+// Get the specified attribute of all NR Cell CU MOs. The result is stored in A as the returned list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+
+
+// --- NRFreqRelation instructions ---
+showAllNRFreqRelation(cellCuID, nodeIP)
+// Fequency relation is in format NRCellCU=1919055_0001_0001_04,NRFreqRelation=176910, this function find all frequency relation for specific CU cell
+showMONRFreqRelationByID(cellCuID, FreqID, nodeIP)
+// show frequency relation with specific Frequency, belong to specific CU Cell
+createMONRFreqRelationByID(cellCuID, FreqID, nodeIP)
+// Create frequency relation with specific FreqID, belong to specific CU Cell, the FreqID define the frequency and also used as frequency relation ID
+deleteMONRFreqRelationByID(cellCuID, FreqID, nodeIP)	
+// Delete frequency relation with specific FreqID, belong to specific CU Cell, the FreqID define the frequency and also used as frequency relation ID	
+showAttributeMONRFreqRelationByID(cellCuID, FreqID, attributeName, nodeIP)
+// show attribute of frequency relation with specific Frequency, belong to specific CU Cell
+showAttributeAllNRFreqRelation(attributeName, nodeIP)
+// show attribute of all frequency relation 
+configAttributeMONRFreqRelationByID(cellCuID, FreqID, attributeName, attributeValue, nodeIP)
+// Set attribute of frequency relation with specific Frequency, belong to specific CU Cell, set the attribute with specific value
+getAllNRFreqRelationPerCUCell(cellCuID, A, nodeIP);
+// Get all frequency relations belong to specific CU Cell, A is the list of found frequency relations
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMONRFreqRelationByIDPerCUCell(cellCuID, FreqID, attributeName, A, nodeIP)	// A is the returned attribute ID
+// Get the frequency relations with specific Frequency ID and belong to specific CU Cell, A is found frequency relation
+// "get" function extracts attribute/MO to enable further processing. 
+
+getAttributeAllMONRFreqRelationPerCUCell(cellCuID, attributeName, A, nodeIP)	// A is the returned attribute ID
+
+
+// --- ExternalNRCellCU instructions ---
+showAllExternalNRCellCU(nodeIP)		
+// show all External NR Cell CU MOs 														
+showMOExternalNRCellCUByID(ExternalGNBCUCPFunctionID, cellCUID, nodeIP)		
+// show the External NR Cell CU MO with the specified ExternalGNBCUCPFunction ID and MO ID.
+// External NR Cell CU format : ExternalGNBCUCPFunction=BS1022,ExternalNRCellCU=1919055_0001_0001_04, so we use both ExternalGNBCUCPFunction ID and MO ID; 
+showAttributeMOExternalNRCellCUByID(ExternalGNBCUCPFunctionID, cellCUID, attributeName, nodeIP)
+// show the specified attribute of the External NR Cell CU MO with the specified ExternalGNBCUCPFunction ID and MO ID.
+showAttributeAllExternalNRCellCU(attributeName, nodeIP)
+// show the specified attribute of all External NR Cell CU MO.
+configAttributeMOExternalNRCellCUByID(ExternalGNBCUCPFunctionID, cellCUID, attributeName, attributeValue, nodeIP)
+// Set the specified attribute of External NR Cell CU MO with specified ExternalGNBCUCPFunction ID and MO ID, set the attribute with specific value
+getAllExternalNRCellCUPerExternalGNBCUCPFunction(ExternalGNBCUCPFunctionID, A, nodeIP)		
+// Get all External NR Cell CU MOs with specified ExternalGNBCUCPFunction ID. A is returned list of External NR Cell CU IDs. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOExternalNRCellCUByIDPerExternalGNBCUCPFunction(ExternalGNBCUCPFunctionID, cellCUID, attributeName, A, nodeIP)	
+// Get the specified attribute of a External NR Cell CU with specified ExternalGNBCUCPFunction ID and External cell CU ID. A is the returned attribute. 
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeAllExternalNRCellCUPerExternalGNBCUCPFunction(ExternalGNBCUCPFunctionID, attributeName, A, nodeIP)				
+// Get the specified attribute of all External NR Cell CU MOs with specified ExternalGNBCUCPFunction ID. A is returned list of list of attributes. 
+// "get" function extracts attribute/MO to enable further processing. 
+
+
+// --- NRCellRelation instructions ---
+showAllNRCellRelation(cellCuID, nodeIP)
+// Cell relation is in format NRCellCU=1687105_3001_0001_10,NRCellRelation=1687105_3001_0001_11, this function find all cell relation for specified CU cell
+showMONRCellRelationByID(cellCuID, ID, nodeIP)
+// show cell relation with specific ID, belong to specified CU Cell
+createMONRCellRelationByID(cellCuID, ECUCPFID, ECUID, CRID, FRID, nodeIP)
+// Create cell relation with specific ID, belong to specified CU Cell. Inputs: cellCuID is source NR CU cell ID, ECUCPFID is external CUCP function ID,
+// ECUID is external cell CU ID, CRID is cell relation ID, FRID is frequency relation ID.
+deleteMONRCellRelationByID(cellCuID, ID, nodeIP)		
+// Delete cell relation with specific ID, belong to specified CU Cell	
+showAttributeMONRCellRelationByID(cellCuID, ID, attributeName, nodeIP)
+// show specified attribute of cell relation with specified ID, belong to specified CU Cell
+showAttributeAllNRCellRelation(attributeName, nodeIP)
+// show specified attribute of all cell relation 
+configAttributeMONRCellRelationByID(cellCuID, ID, attributeName, attributeValue, nodeIP)
+// Set specified attribute of cell relation with specified ID and belong to specified CU Cell, set the attribute with specified value
+getAllNRCellRelationPerCUCell(cellCuID, A, nodeIP)		
+// Get all cell relations belong to specified CU Cell, A is the list of found cell relations
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMONRCellRelationByIDPerCUCell(cellCuID, ID, attributeName, A, nodeIP)	
+// Get the cell relations with specified ID and belong to specified CU Cell, A is found cell relation
+// "get" function extracts attribute/MO to enable further processing. 
+
+getAttributeAllMONRCellRelationPerCUCell(cellCuID, attributeName, A, nodeIP)	
+
+
+// --- ExtGNBDUPartnerFunction ---
+showAllExtGNBDUPartnerFunction(nodeIP)
+// show all External GNB DU Partner Function MOs
+showMOExtGNBDUPartnerFunctionByID(ID, nodeIP)
+// show External GNB DU Partner Function with specific ID
+createMOExtGNBDUPartnerFunctionByID(ID, SourceDUFID, gNBDUID, gNBID, nodeIP)
+// Create External GNB DU Partner Function with specific ID, with input of GNB ID and GNB DU ID
+deleteMOExtGNBDUPartnerFunctionByID(ID, nodeIP)		
+// Delete External GNB DU Partner Function with specific ID	
+showAttributeMOExtGNBDUPartnerFunctionByID(ID, attributeName, nodeIP)
+// show specified attribute of External GNB DU Partner Function with specific ID
+showAttributeAllExtGNBDUPartnerFunction(attributeName, nodeIP)
+// show specified attribute of all External GNB DU Partner Function 
+configAttributeMOExtGNBDUPartnerFunctionByID(ID, attributeName, attributeValue, nodeIP)
+// Set specified attribute of External GNB DU Partner Function with specified ID, set the attribute with specified value
+getAllExtGNBDUPartnerFunction(A, nodeIP)		
+// Get all External GNB DU Partner Function, A is the list of found External GNB DU Partner Function IDs
+// "get" function extracts attribute/MO to enable further processing. 
+getAttributeMOExtGNBDUPartnerFunctionByID(ID, attributeName, A, nodeIP)	
+// Get the External GNB DU Partner Function with specified ID, A is found External GNB DU Partner Function
+// "get" function extracts attribute/MO to enable further processing. 
+
+getAttributeAllMOExtGNBDUPartnerFunction(attributeName, A, nodeIP)	
+
+
+// --- InterMeLink ---
+showAllInterMeLink(nodeIP)
+// show all Inter Me Link MOs
+showAllInterMeLinkPerEPF(EPFID, nodeIP)
+// show all Inter Me Link MOs belong to specified ExtGNBDUPartnerFunction
+showMOInterMeLinkByID(EPFID, ID, nodeIP)
+// show Inter Me Link MO with specific ID, belong to specified ExtGNBDUPartnerFunction
+showAttributeAllInterMeLink(attributeName, nodeIP)
+// show specified attribute of all Inter Me Link MO 
+showAttributeMOInterMeLinkByID(EPFID, ID, attributeName, nodeIP)
+// show specified attribute of Inter Me Link MO with specified ID, belong to specified ExtGNBDUPartnerFunction
+
+
+
+
+
+
+// --- Test Execution ---
+getIPForRDTByName(rdtName, A);
+// Get the IP address with specified remote destop (rdt) name, A is the returned IP address
+attachUE(rdtIP);
+// Attach UE on specific remote destop (rdt), with ip address to access the rdt
+runTraffic(rdtIP);
+// Run traffic on specific remote destop (rdt), with ip address to access the rdt
+
+getIPCADUCounter(cellIP, cellID, IPCACounterName, A);
+// Use the cell's IP to access the vDU, using cell ID and run PM counter collection, and verify whether CA is triggered.
+startIPCATrace(cellIP);
+// Start IPCA related traces on a specified cell
+stopIPCATrace(cellIP);
+// Stop IPCA related traces on a specified cell
+verifyIPCATput(A);
+// Compare the measured throughput with the specified threshold, and store the result in A.
+
+
+
+For above MOs list, Attributes list and instructions list, please don't do anything, they will be used for the following queries.
